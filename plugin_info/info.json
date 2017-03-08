@@ -1,0 +1,8 @@
+{
+	"id" : "ayat",
+	"name" : "Ayat",
+	"licence" : "AGPL",
+	"author" : "lunarok",
+	"require" : "2.4",
+	"category" : "organization"
+}
