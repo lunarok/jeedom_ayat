@@ -26,10 +26,10 @@ class ayat extends eqLogic {
     }
 
     public function loadCmdFromConf($_update = false) {
-		if (!is_file(dirname(__FILE__) . '/../config/devices/')) {
+		if (!is_file(dirname(__FILE__) . '/../config/devices/ayat.json')) {
 			return;
 		}
-		$content = file_get_contents(dirname(__FILE__) . '/../config/devices/');
+		$content = file_get_contents(dirname(__FILE__) . '/../config/devices/ayat.json');
 		if (!is_json($content)) {
 			return;
 		}
