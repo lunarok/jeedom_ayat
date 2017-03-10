@@ -22,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class ayat extends eqLogic {
 
     public function postSave() {
-        $this->applyModuleConfiguration('ayat');
+        $this->applyModuleConfiguration();
     }
 
     public static function devicesParameters($_device = '') {
@@ -53,8 +53,8 @@ class ayat extends eqLogic {
         return $return;
     }
 
-    public function applyModuleConfiguration($model) {
-        $device = self::devicesParameters($model);
+    public function applyModuleConfiguration() {
+        $device = self::devicesParameters('ayat');
         if (!is_array($device)) {
             return true;
         }
