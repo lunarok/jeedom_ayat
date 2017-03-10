@@ -1,9 +1,9 @@
 {
-    "gateway": {
-        "name": "Gateway",
+    "ayat": {
+        "name": "Ayat",
 		"configuration" : {
-			"model" : "gateway",
-            "type" : "aquara"
+			"model" : "ayat",
+            "type" : "ayat"
 		},
         "commands": [
             {
