@@ -25,86 +25,23 @@ class ayat extends eqLogic {
         $this->applyModuleConfiguration();
     }
 
-    public static function devicesParameters($_device = '') {
-        $return = array();
-        foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
-            $path = dirname(__FILE__) . '/../config/devices/' . $dir;
-            if (!is_dir($path)) {
-                continue;
-            }
-            $files = ls($path, '*.json', false, array('files', 'quiet'));
-            foreach ($files as $file) {
-                try {
-                    $content = file_get_contents($path . '/' . $file);
-                    if (is_json($content)) {
-                        $return += json_decode($content, true);
-                    }
-                } catch (Exception $e) {
-
-                }
-            }
-        }
-        if (isset($_device) && $_device != '') {
-            if (isset($return[$_device])) {
-                return $return[$_device];
-            }
-            return array();
-        }
-        return $return;
-    }
-
-    public function applyModuleConfiguration() {
-        $device = self::devicesParameters('ayat');
-        if (!is_array($device)) {
-            return true;
-        }
-
-        $link_cmds = array();
-        $link_actions = array();
-        foreach ($device['commands'] as $command) {
-            $ayatCmd = ayatCmd::byEqLogicIdAndLogicalId($this->getId(),$command['logicalId']);
-            if (!is_object($ayatCmd)) {
-                $ayatCmd = new ayatCmd();
-                $ayatCmd->setEqLogic_id($this->getId());
-                $ayatCmd->setEqType('ayat');
-                $ayatCmd->setLogicalId($command['logicalId']);
-                utils::a2o($ayatCmd, $command);
-                $ayatCmd->save();
-                if (isset($command['value'])) {
-                    $link_cmds[$ayatCmd->getId()] = $command['value'];
-                }
-                if (isset($command['configuration']) && isset($command['configuration']['updateCmdId'])) {
-                    $link_actions[$ayatCmd->getId()] = $command['configuration']['updateCmdId'];
-                }
-            }
-        }
-        if (count($link_cmds) > 0) {
-            foreach ($this->getCmd() as $eqLogic_cmd) {
-                foreach ($link_cmds as $cmd_id => $link_cmd) {
-                    if ($link_cmd == $eqLogic_cmd->getName()) {
-                        $cmd = cmd::byId($cmd_id);
-                        if (is_object($cmd)) {
-                            $cmd->setValue($eqLogic_cmd->getId());
-                            $cmd->save();
-                        }
-                    }
-                }
-            }
-        }
-        if (count($link_actions) > 0) {
-            foreach ($this->getCmd() as $eqLogic_cmd) {
-                foreach ($link_actions as $cmd_id => $link_action) {
-                    if ($link_action == $eqLogic_cmd->getName()) {
-                        $cmd = cmd::byId($cmd_id);
-                        if (is_object($cmd)) {
-                            $cmd->setConfiguration('updateCmdId', $eqLogic_cmd->getId());
-                            $cmd->save();
-                        }
-                    }
-                }
-            }
-        }
-    }
+    public function loadCmdFromConf($_update = false) {
+		if (!is_file(dirname(__FILE__) . '/../config/devices/')) {
+			return;
+		}
+		$content = file_get_contents(dirname(__FILE__) . '/../config/devices/');
+		if (!is_json($content)) {
+			return;
+		}
+		$device = json_decode($content, true);
+		if (!is_array($device) || !isset($device['commands'])) {
+			return true;
+		}
+		if (isset($device['name']) && !$_update) {
+			$this->setName('[' . $this->getLogicalId() . ']' . $device['name']);
+		}
+		$this->import($device);
+	}
 
     public function callAPI($param) {
         $url = 'http://api.alquran.cloud/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
