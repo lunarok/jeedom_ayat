@@ -1,0 +1,163 @@
+{
+    "gateway": {
+        "name": "Gateway",
+		"configuration" : {
+			"model" : "gateway",
+            "type" : "aquara"
+		},
+        "commands": [
+            {
+                "name": "Contenu arabe",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "arabic"
+            },
+            {
+                "name": "Contenu traduction",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "translation"
+            },
+            {
+                "name": "URL Audio",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "audio"
+            },
+            {
+                "name": "URL Audio traduction",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "audiotranslation"
+            },
+            {
+                "name": "Nom sourate arabe",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "surah:name"
+            },
+            {
+                "name": "Nom sourate phonétique",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "surah:englishName"
+            },
+            {
+                "name": "Nom sourate traduite",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "surah:englishNameTranslation"
+            },
+            {
+                "name": "Numéro sourate",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "sura:number"
+            },
+            {
+                "name": "Numéro verset dans sourate",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "numberInSurah"
+            },
+            {
+                "name": "Numéro verset global",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "number"
+            },
+            {
+                "name": "Numéro Juzz",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "juz"
+            },
+            {
+                "name": "Lieu de révélation",
+                "type": "info",
+                "subtype": "string",
+                "display": {
+					"generic_type": "DONT"
+                },
+                "isVisible": 0,
+                "logicalId": "surah:revelationType"
+            },
+            {
+                "name": "Ayat aléatoire",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-random\"><\/i>"
+                },
+                "isVisible": 1,
+                "logicalId": "randomAyat"
+            },
+            {
+                "name": "Sourate aléatoire",
+                "type": "action",
+                "subtype": "other",
+                "display": {
+					"icon": "<i class=\"fa fa-random\"><\/i>"
+                },
+                "isVisible": 1,
+                "logicalId": "randomSourate"
+            },
+            {
+                "name": "Récupérer un extrait",
+                "type": "action",
+                "subtype": "message",
+                "display": {
+					"generic_type": "DONT",
+                    "title_placeholder" : "Sourate",
+                    "message_placeholder" : "Ayat"
+                },
+                "isVisible": 1,
+                "logicalId": "retrieve"
+            }
+        ]
+    }
+}

@@ -21,48 +21,107 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class ayat extends eqLogic {
 
-
-    public function postUpdate() {
-        $cmd = ayatCmd::byEqLogicIdAndLogicalId($this->getId(),'door');
-        if (!is_object($cmd)) {
-            $cmd = new ayatCmd();
-            $cmd->setLogicalId('door');
-            $cmd->setIsVisible(1);
-            $cmd->setName(__('Ouverture Porte', __FILE__));
-        }
-        $cmd->setType('action');
-        $cmd->setSubType('other');
-        $cmd->setConfiguration('url','open-door.cgi');
-        $cmd->setEqLogic_id($this->getId());
-        $cmd->save();
-
-        $cmd = ayatCmd::byEqLogicIdAndLogicalId($this->getId(),'dooropen');
-        if (!is_object($cmd)) {
-            $cmd = new ayatCmd();
-            $cmd->setLogicalId('dooropen');
-            $cmd->setIsVisible(1);
-            $cmd->setName(__('Porte', __FILE__));
-        }
-        $cmd->setType('info');
-        $cmd->setSubType('binary');
-        $cmd->setDisplay('generic_type','LOCK_STATE');
-        $cmd->setConfiguration('returnStateValue',1);
-        $cmd->setConfiguration('returnStateTime',1);
-        $cmd->setTemplate("mobile",'lock');
-        $cmd->setTemplate("dashboard",'lock' );
-        $cmd->setEqLogic_id($this->getId());
-        $cmd->save();
-
+    public function postSave() {
+        $this->applyModuleConfiguration($this->getConfiguration('model'));
     }
 
-    public function getAyat() {
+    public static function devicesParameters($_device = '') {
+        $return = array();
+        foreach (ls(dirname(__FILE__) . '/../config/devices', '*') as $dir) {
+            $path = dirname(__FILE__) . '/../config/devices/' . $dir;
+            if (!is_dir($path)) {
+                continue;
+            }
+            $files = ls($path, '*.json', false, array('files', 'quiet'));
+            foreach ($files as $file) {
+                try {
+                    $content = file_get_contents($path . '/' . $file);
+                    if (is_json($content)) {
+                        $return += json_decode($content, true);
+                    }
+                } catch (Exception $e) {
 
-        log::add('ayat', 'debug', 'Retour : ' . $retour);
+                }
+            }
+        }
+        if (isset($_device) && $_device != '') {
+            if (isset($return[$_device])) {
+                return $return[$_device];
+            }
+            return array();
+        }
+        return $return;
     }
 
-    public function getSourate() {
-        $retour = file_get_contents($url);
-        log::add('ayat', 'debug', 'Retour : ' . $retour);
+    public function applyModuleConfiguration($model) {
+        $device = self::devicesParameters($model);
+        if (!is_array($device)) {
+            return true;
+        }
+
+        $link_cmds = array();
+        $link_actions = array();
+        foreach ($device['commands'] as $command) {
+            $ayatCmd = ayatCmd::byEqLogicIdAndLogicalId($this->getId(),$command['logicalId']);
+            if (!is_object($ayatCmd)) {
+                $ayatCmd = new ayatCmd();
+                $ayatCmd->setEqLogic_id($this->getId());
+                $ayatCmd->setEqType('ayat');
+                $ayatCmd->setLogicalId($command['logicalId']);
+                utils::a2o($ayatCmd, $command);
+                $ayatCmd->save();
+                if (isset($command['value'])) {
+                    $link_cmds[$ayatCmd->getId()] = $command['value'];
+                }
+                if (isset($command['configuration']) && isset($command['configuration']['updateCmdId'])) {
+                    $link_actions[$ayatCmd->getId()] = $command['configuration']['updateCmdId'];
+                }
+            }
+        }
+        if (count($link_cmds) > 0) {
+            foreach ($this->getCmd() as $eqLogic_cmd) {
+                foreach ($link_cmds as $cmd_id => $link_cmd) {
+                    if ($link_cmd == $eqLogic_cmd->getName()) {
+                        $cmd = cmd::byId($cmd_id);
+                        if (is_object($cmd)) {
+                            $cmd->setValue($eqLogic_cmd->getId());
+                            $cmd->save();
+                        }
+                    }
+                }
+            }
+        }
+        if (count($link_actions) > 0) {
+            foreach ($this->getCmd() as $eqLogic_cmd) {
+                foreach ($link_actions as $cmd_id => $link_action) {
+                    if ($link_action == $eqLogic_cmd->getName()) {
+                        $cmd = cmd::byId($cmd_id);
+                        if (is_object($cmd)) {
+                            $cmd->setConfiguration('updateCmdId', $eqLogic_cmd->getId());
+                            $cmd->save();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public function callAPI($param) {
+        $url = 'http://api.alquran.cloud/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
+        $body = json_decode(file_get_contents($url, true);
+
+        $this->checkAndUpdateCmd('arabic', $body['data'][0]['text']);
+        $this->checkAndUpdateCmd('translation', $body['data'][2]['text']);
+        $this->checkAndUpdateCmd('audio', $body['data'][0]['audio']);
+        $this->checkAndUpdateCmd('audiotranslation', $body['data'][1]['audio']);
+        $this->checkAndUpdateCmd('surah:name', $body['data'][1]['surah']['name']);
+        $this->checkAndUpdateCmd('surah:englishName', $body['data'][1]['surah']['englishName']);
+        $this->checkAndUpdateCmd('surah:englishNameTranslation', $body['data'][1]['surah']['englishNameTranslation']);
+        $this->checkAndUpdateCmd('sura:number', $body['data'][1]['surah']['number']);
+        $this->checkAndUpdateCmd('number', $body['data'][1]['number']);
+        $this->checkAndUpdateCmd('numberInSurah', $body['data'][1]['numberInSurah']);
+        $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
+        $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
     }
 
 }
@@ -74,30 +133,35 @@ class ayatCmd extends cmd {
             return $this->getConfiguration('value');
             break;
             case 'action' :
-            $request = $this->getConfiguration('request');
+            $eqLogic = $this->getEqLogic();
             switch ($this->getSubType()) {
-                case 'slider':
-                $request = str_replace('#slider#', $value, $request);
-                break;
-                case 'color':
-                $request = str_replace('#color#', $_options['color'], $request);
-                break;
                 case 'message':
-                if ($_options != null)  {
-                    $replace = array('#title#', '#message#');
-                    $replaceBy = array($_options['title'], $_options['message']);
-                    if ( $_options['title'] == '') {
-                        throw new Exception(__('Le sujet ne peuvent être vide', __FILE__));
+                if ($_options['title'] != '') {
+                    //contient un numéro de sourate
+                    if ($_options['message'] != '') {
+                        //avec un ayat
+                        $param = 'ayah/' . $_options['title'] . ':' . $_options['message'];
+                    } else {
+                        $param = 'surah/' . $_options['title'];
                     }
-                    $request = str_replace($replace, $replaceBy, $request);
-
+                } else {
+                    if ($_options['message'] != '') {
+                        //avec un ayat
+                        $param = 'ayah/' . $_options['message'];
+                    } else {
+                        return;
+                    }
                 }
-                else
-                $request = 1;
                 break;
-                default : $request == null ?  1 : $request;
+                case 'other':
+                if ($this->getLogicalId() == 'randomAyat') {
+                    $param = 'ayah/' . rand(1,6236);
+                } else {
+                    $param = 'surah/' . rand(1,114);
+                }
+                break;
             }
-
+            $eqLogic->callAPI($param);
             return true;
         }
         return true;
