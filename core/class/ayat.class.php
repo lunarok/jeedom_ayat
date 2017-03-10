@@ -22,7 +22,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 class ayat extends eqLogic {
 
     public function postSave() {
-        $this->applyModuleConfiguration();
+        $this->loadCmdFromConf();
     }
 
     public function loadCmdFromConf($_update = false) {
