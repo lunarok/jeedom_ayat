@@ -85,7 +85,7 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('surah:englishName', $body['data'][1]['englishName']);
         $this->checkAndUpdateCmd('surah:englishNameTranslation', $body['data'][1]['englishNameTranslation']);
         $this->checkAndUpdateCmd('sura:number', $body['data'][1]['number']);
-        $this->checkAndUpdateCmd('number', 0]);
+        $this->checkAndUpdateCmd('number', 0);
         $this->checkAndUpdateCmd('numberInSurah', 0);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['revelationType']);
     }
