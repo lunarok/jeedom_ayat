@@ -1,0 +1,3 @@
+==== Configuration du plugin
+
+Le plugin ne comporte pas de configuration générale ni par équipement.

@@ -46,7 +46,6 @@ class ayat extends eqLogic {
     public function callAyah($param) {
         $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
         $body = json_decode(file_get_contents($url), true);
-        log::add('ayat', 'debug', 'recu : ' . print_r($body,true));
         $this->checkAndUpdateCmd('arabic', $body['data'][0]['text']);
         $this->checkAndUpdateCmd('translation', $body['data'][2]['text']);
         $this->checkAndUpdateCmd('audio', $body['data'][0]['audio']);
@@ -63,7 +62,6 @@ class ayat extends eqLogic {
     public function callSourah($param) {
         $url = 'http://api.alquran.cloud/surah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
         $body = json_decode(file_get_contents($url), true);
-        log::add('ayat', 'debug', 'recu : ' . print_r($body,true));
         $arabic = $translation = $juz = '';
         $audio = $audiotranslation = [];
         foreach ($body['data'][0]['ayahs'] as $ayah) {

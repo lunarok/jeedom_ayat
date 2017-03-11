@@ -1,0 +1,3 @@
+==== Ayat
+
+Ce plugin permet de chercher une sourate, un verset ou un juzz par exemple. Plusieurs versions linguistiques sont disponibles ainsi que de l'audio.
