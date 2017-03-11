@@ -75,8 +75,8 @@ class ayat extends eqLogic {
         foreach ($body['data'][2]['ayahs'] as $ayah) {
             $translation .= $ayah['text'];
         }
-        $this->checkAndUpdateCmd('arabic', $arabic);
-        $this->checkAndUpdateCmd('translation', $translation);
+        $this->checkAndUpdateCmd('arabic', json_encode($arabic));
+        $this->checkAndUpdateCmd('translation', json_encode($translation));
         $this->checkAndUpdateCmd('audio', $audio);
         $this->checkAndUpdateCmd('audiotranslation', $audiotranslation);
         $this->checkAndUpdateCmd('juz', $juz);
