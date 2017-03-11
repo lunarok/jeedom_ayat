@@ -43,11 +43,10 @@ class ayat extends eqLogic {
 		$this->import($device);
 	}
 
-    public function callAPI($param) {
-        $url = 'http://api.alquran.cloud/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
+    public function callAyah($param) {
+        $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
         $body = json_decode(file_get_contents($url), true);
         log::add('ayat', 'debug', 'recu : ' . print_r($body,true));
-
         $this->checkAndUpdateCmd('arabic', $body['data'][0]['text']);
         $this->checkAndUpdateCmd('translation', $body['data'][2]['text']);
         $this->checkAndUpdateCmd('audio', $body['data'][0]['audio']);
@@ -60,6 +59,37 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('numberInSurah', $body['data'][1]['numberInSurah']);
         $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
+    }
+    public function callSourah($param) {
+        $url = 'http://api.alquran.cloud/surah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
+        $body = json_decode(file_get_contents($url), true);
+        log::add('ayat', 'debug', 'recu : ' . print_r($body,true));
+        $arabic = $translation = $juz = '';
+        $audio = $audiotranslation = [];
+        foreach ($body['data'][0]['ayahs'] as $ayah) {
+            $arabic .= $ayah['text'];
+            $audio[] = $ayah['audio'];
+            $juz = $ayah['juz'];
+        }
+        foreach ($body['data'][1]['ayahs'] as $ayah) {
+            $audiotranslation[] = $ayah['audio'];
+        }
+        foreach ($body['data'][2]['ayahs'] as $ayah) {
+            $translation .= $ayah['text'];
+        }
+        $this->checkAndUpdateCmd('arabic', $arabic);
+        $this->checkAndUpdateCmd('translation', $translation);
+        $this->checkAndUpdateCmd('audio', $audio);
+        $this->checkAndUpdateCmd('audiotranslation', $audiotranslation);
+        $this->checkAndUpdateCmd('juz', $juz);
+
+        $this->checkAndUpdateCmd('surah:name', $body['data'][1]['name']);
+        $this->checkAndUpdateCmd('surah:englishName', $body['data'][1]['englishName']);
+        $this->checkAndUpdateCmd('surah:englishNameTranslation', $body['data'][1]['englishNameTranslation']);
+        $this->checkAndUpdateCmd('sura:number', $body['data'][1]['number']);
+        $this->checkAndUpdateCmd('number', 0]);
+        $this->checkAndUpdateCmd('numberInSurah', 0);
+        $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['revelationType']);
     }
 
 }
@@ -78,14 +108,14 @@ class ayatCmd extends cmd {
                     //contient un numéro de sourate
                     if ($_options['message'] != '') {
                         //avec un ayat
-                        $param = 'ayah/' . $_options['title'] . ':' . $_options['message'];
+                        $eqLogic->callAyah($_options['title'] . ':' . $_options['message']);
                     } else {
-                        $param = 'surah/' . $_options['title'];
+                        $eqLogic->callSourah($_options['title']);
                     }
                 } else {
                     if ($_options['message'] != '') {
                         //avec un ayat
-                        $param = 'ayah/' . $_options['message'];
+                        $eqLogic->callAyah($_options['message']);
                     } else {
                         return;
                     }
@@ -93,13 +123,12 @@ class ayatCmd extends cmd {
                 break;
                 case 'other':
                 if ($this->getLogicalId() == 'randomAyat') {
-                    $param = 'ayah/' . rand(1,6236);
+                    $eqLogic->callAyah(rand(1,6236));
                 } else {
-                    $param = 'surah/' . rand(1,114);
+                    $eqLogic->callSourah(rand(1,114));
                 }
                 break;
             }
-            $eqLogic->callAPI($param);
             return true;
         }
         return true;
