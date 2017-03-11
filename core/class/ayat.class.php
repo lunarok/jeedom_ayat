@@ -70,14 +70,13 @@ class ayat extends eqLogic {
             } else {
                 $param = $sourate . ':' . $i;
             }
+            $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
+            $body = json_decode(file_get_contents($url), true);
             $arabic .= $body['data'][0]['text'];
             $translation .= $body['data'][2]['text'];
             $audio[] = $body['data'][0]['audio'];
             $audiotranslation[] = $body['data'][1]['audio'];
-            $juz = $ayah['juz'];
         }
-        $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
-        $body = json_decode(file_get_contents($url), true);
         $this->checkAndUpdateCmd('arabic', $arabic);
         $this->checkAndUpdateCmd('translation', $translation);
         $this->checkAndUpdateCmd('audio', json_encode($audio));
