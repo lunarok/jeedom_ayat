@@ -12,7 +12,7 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
+            "isVisible": 1,
             "logicalId": "arabic"
         },
         {
@@ -22,7 +22,7 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
+            "isVisible": 1,
             "logicalId": "translation"
         },
         {
@@ -52,7 +52,6 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
             "logicalId": "surah:name"
         },
         {
@@ -62,7 +61,6 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
             "logicalId": "surah:englishName"
         },
         {
@@ -72,7 +70,6 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
             "logicalId": "surah:englishNameTranslation"
         },
         {
@@ -82,7 +79,6 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
             "logicalId": "sura:number"
         },
         {
@@ -92,7 +88,6 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
             "logicalId": "numberInSurah"
         },
         {
@@ -102,7 +97,6 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
             "logicalId": "number"
         },
         {
@@ -112,7 +106,6 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
             "logicalId": "juz"
         },
         {
@@ -122,7 +115,6 @@
             "display": {
 				"generic_type": "DONT"
             },
-            "isVisible": 0,
             "logicalId": "surah:revelationType"
         },
         {
@@ -132,7 +124,6 @@
             "display": {
 				"icon": "<i class=\"fa fa-random\"><\/i>"
             },
-            "isVisible": 1,
             "logicalId": "randomAyat"
         },
         {
@@ -142,7 +133,6 @@
             "display": {
 				"icon": "<i class=\"fa fa-random\"><\/i>"
             },
-            "isVisible": 1,
             "logicalId": "randomSourate"
         },
         {
@@ -154,7 +144,6 @@
                 "title_placeholder" : "Sourate",
                 "message_placeholder" : "Ayat"
             },
-            "isVisible": 1,
             "logicalId": "retrieve"
         }
     ]
