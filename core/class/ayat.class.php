@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class ayat extends eqLogic {
 
-    public function postSave() {
+    public function postUpdate() {
         $this->loadCmdFromConf();
     }
 
@@ -45,7 +45,7 @@ class ayat extends eqLogic {
 
     public function callAPI($param) {
         $url = 'http://api.alquran.cloud/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
-        $body = json_decode(file_get_contents($url, true));
+        $body = json_decode(file_get_contents($url), true);
         log::add('ayat', 'debug', 'recu : ' . print_r($body,true));
 
         $this->checkAndUpdateCmd('arabic', $body['data'][0]['text']);
