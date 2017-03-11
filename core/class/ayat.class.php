@@ -59,6 +59,39 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
     }
+
+    public function callExtract($sourate,$param) {
+        $sub = explode('-', $param);
+        $arabic = $translation = $juz = '';
+        $audio = $audiotranslation = [];
+        for ($i=$sub[0]; $i <= $sub[1]; $i++) {
+            if ($sourate == 0) {
+                $param = $i;
+            } else {
+                $param = $sourate . ':' . $i;
+            }
+            $arabic .= $body['data'][0]['text'];
+            $translation .= $body['data'][2]['text'];
+            $audio[] = $body['data'][0]['audio'];
+            $audiotranslation[] = $body['data'][1]['audio'];
+            $juz = $ayah['juz'];
+        }
+        $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
+        $body = json_decode(file_get_contents($url), true);
+        $this->checkAndUpdateCmd('arabic', $arabic);
+        $this->checkAndUpdateCmd('translation', $translation);
+        $this->checkAndUpdateCmd('audio', json_encode($audio));
+        $this->checkAndUpdateCmd('audiotranslation', json_encode($audiotranslation));
+        $this->checkAndUpdateCmd('surah:name', $body['data'][1]['surah']['name']);
+        $this->checkAndUpdateCmd('surah:englishName', $body['data'][1]['surah']['englishName']);
+        $this->checkAndUpdateCmd('surah:englishNameTranslation', $body['data'][1]['surah']['englishNameTranslation']);
+        $this->checkAndUpdateCmd('sura:number', $body['data'][1]['surah']['number']);
+        $this->checkAndUpdateCmd('number', $body['data'][1]['number']);
+        $this->checkAndUpdateCmd('numberInSurah', $body['data'][1]['numberInSurah']);
+        $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
+        $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
+    }
+
     public function callSourah($param) {
         $url = 'http://api.alquran.cloud/surah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
         $body = json_decode(file_get_contents($url), true);
@@ -75,10 +108,10 @@ class ayat extends eqLogic {
         foreach ($body['data'][2]['ayahs'] as $ayah) {
             $translation .= $ayah['text'];
         }
-        $this->checkAndUpdateCmd('arabic', json_encode($arabic));
-        $this->checkAndUpdateCmd('translation', json_encode($translation));
-        $this->checkAndUpdateCmd('audio', $audio);
-        $this->checkAndUpdateCmd('audiotranslation', $audiotranslation);
+        $this->checkAndUpdateCmd('arabic', $arabic);
+        $this->checkAndUpdateCmd('translation', $translation);
+        $this->checkAndUpdateCmd('audio', json_encode($audio));
+        $this->checkAndUpdateCmd('audiotranslation', json_encode($audiotranslation));
         $this->checkAndUpdateCmd('juz', $juz);
 
         $this->checkAndUpdateCmd('surah:name', $body['data'][1]['name']);
@@ -106,14 +139,22 @@ class ayatCmd extends cmd {
                     //contient un numéro de sourate
                     if ($_options['message'] != '') {
                         //avec un ayat
-                        $eqLogic->callAyah($_options['title'] . ':' . $_options['message']);
+                        if (strpos($_options['message']) === false) {
+                            $eqLogic->callAyah($_options['title'] . ':' . $_options['message']);
+                        } else {
+                            $eqLogic->callExtract($_options['title'], $_options['message']);
+                        }
                     } else {
                         $eqLogic->callSourah($_options['title']);
                     }
                 } else {
                     if ($_options['message'] != '') {
                         //avec un ayat
-                        $eqLogic->callAyah($_options['message']);
+                        if (strpos($_options['message']) === false) {
+                            $eqLogic->callAyah($_options['message']);
+                        } else {
+                            $eqLogic->callExtract(0, $_options['message']);
+                        }
                     } else {
                         return;
                     }
