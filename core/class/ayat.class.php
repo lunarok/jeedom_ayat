@@ -21,7 +21,7 @@ require_once dirname(__FILE__) . '/../../../../core/php/core.inc.php';
 
 class ayat extends eqLogic {
 
-    public function preSave() {
+    public function postAjax() {
         $this->loadCmdFromConf();
     }
 
