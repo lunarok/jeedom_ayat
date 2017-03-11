@@ -138,7 +138,7 @@ class ayatCmd extends cmd {
                     //contient un numéro de sourate
                     if ($_options['message'] != '') {
                         //avec un ayat
-                        if (strpos($_options['message']) === false) {
+                        if (strpos($_options['message'],'-') === false) {
                             $eqLogic->callAyah($_options['title'] . ':' . $_options['message']);
                         } else {
                             $eqLogic->callExtract($_options['title'], $_options['message']);
@@ -149,7 +149,7 @@ class ayatCmd extends cmd {
                 } else {
                     if ($_options['message'] != '') {
                         //avec un ayat
-                        if (strpos($_options['message']) === false) {
+                        if (strpos($_options['message'],'-') === false) {
                             $eqLogic->callAyah($_options['message']);
                         } else {
                             $eqLogic->callExtract(0, $_options['message']);
