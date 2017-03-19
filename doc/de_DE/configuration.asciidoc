@@ -1,3 +1,3 @@
-==== Configuration du plugin
+==== Plugin Konfiguration
 
-Le plugin ne comporte pas de configuration générale ni par équipement.
+Das Plugin enthält keine allgemeine Konfiguration sowie Geräte.

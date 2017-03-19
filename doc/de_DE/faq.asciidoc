@@ -1,5 +1,5 @@
 [panel,primary]
-.Est-ce que le plugin s'appuie sur des API cloud ?
+.Stützt sich das Plugin auf eine API-Cloud ?
 --
-Oui, le plugin s'appuie sur https://alquran.cloud/api
+Ja, das Plugin verwendet https://alquran.cloud/api
 --
