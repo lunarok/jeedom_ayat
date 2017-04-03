@@ -10,6 +10,7 @@ do
     wget $addr
 done
 
-ffmpeg -i "concat:$1" -acodec copy $2
+for f in ./*; do echo "file '$f'" >> mylist.txt; done
+ffmpeg -f concat -safe 0 -i mylist.txt -c copy $2
 
 rm *
