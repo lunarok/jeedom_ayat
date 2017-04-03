@@ -25,6 +25,11 @@ class ayat extends eqLogic {
         $this->loadCmdFromConf();
     }
 
+    public function preSave() {
+        $url = network::getNetworkAccess('external') . '/plugins/ayat/data/' . $this->getId() . '.mp3';
+        $this->setConfiguration('url',$url);
+    }
+
     public function loadCmdFromConf($_update = false) {
 		if (!is_file(dirname(__FILE__) . '/../config/devices/ayat.json')) {
 			return;
@@ -58,6 +63,8 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('numberInSurah', $body['data'][1]['numberInSurah']);
         $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
+        $this->dwldAyat($body['data'][0]['audio'],'arab');
+        $this->dwldAyat($body['data'][1]['audio'],'fr');
     }
 
     public function callExtract($sourate,$param) {
@@ -89,6 +96,8 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('numberInSurah', $body['data'][1]['numberInSurah']);
         $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
+        $this->dwldAyat(json_encode($audio),'arab');
+        $this->dwldAyat(json_encode($audio),'fr');
     }
 
     public function callSourah($param) {
@@ -120,7 +129,19 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('number', 0);
         $this->checkAndUpdateCmd('numberInSurah', 0);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['revelationType']);
+        $this->dwldAyat(json_encode($audio),'arab');
+        $this->dwldAyat(json_encode($audio),'fr');
     }
+
+    public static function dwldAyat($list,$lang) {
+		if (!file_exists(dirname(__FILE__) . '/../../data')) {
+			mkdir(dirname(__FILE__) . '/../../data');
+		}
+        $list = substr_replace('[','',substr_replace(']','',substr_replace('"','',substr_replace(',','|',$list))));
+        $data_path = realpath(dirname(__FILE__) . '/../../data/' . $this->getId() . '_' . $lang . '.mp3';
+        $resource_path = realpath(dirname(__FILE__) . '/../../resources');
+        passthru('/bin/bash ' . $resource_path . '/install.sh ' . $list . ' ' . );
+	}
 
 }
 
