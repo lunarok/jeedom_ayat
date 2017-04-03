@@ -138,7 +138,7 @@ class ayat extends eqLogic {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
         $list = substr_replace('[','',substr_replace(']','',substr_replace('"','',substr_replace(',','|',$list))));
-        $data_path = realpath(dirname(__FILE__) . '/../../data/' . $this->getId() . '_' . $lang . '.mp3';
+        $data_path = realpath(dirname(__FILE__)) . '/../../data/' . $this->getId() . '_' . $lang . '.mp3';
         $resource_path = realpath(dirname(__FILE__) . '/../../resources');
         passthru('/bin/bash ' . $resource_path . '/install.sh ' . $list . ' ' . );
 	}
