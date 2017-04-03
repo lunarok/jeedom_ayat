@@ -2,6 +2,8 @@
 
 files=$(echo $1 | tr "," "\n")
 sudo mkdir /tmp/ayat
+sudo chown -R www-data /tmp/ayat
+cd /tmp/ayat
 
 for addr in $files
 do
