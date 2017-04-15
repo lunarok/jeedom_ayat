@@ -133,7 +133,7 @@ class ayat extends eqLogic {
         $this->dwldAyat(json_encode($audio),'fr');
     }
 
-    public static function dwldAyat($list,$lang) {
+    public function dwldAyat($list,$lang) {
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
