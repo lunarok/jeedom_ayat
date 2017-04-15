@@ -137,6 +137,7 @@ class ayat extends eqLogic {
 		if (!file_exists(dirname(__FILE__) . '/../../data')) {
 			mkdir(dirname(__FILE__) . '/../../data');
 		}
+        log::add('ayat', 'debug', 'list : ' . $list);
         $list = substr_replace('[','',substr_replace(']','',substr_replace('"','',substr_replace(',','|',$list))));
         $data_path = realpath(dirname(__FILE__)) . '/../../data/' . $this->getId() . '_' . $lang . '.mp3';
         $resource_path = realpath(dirname(__FILE__) . '/../../resources');
