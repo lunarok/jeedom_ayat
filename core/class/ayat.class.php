@@ -185,10 +185,21 @@ class ayatCmd extends cmd {
                 break;
                 case 'other':
                 if ($this->getLogicalId() == 'playAr') {
-                    $eqLogic->getConfiguration('play');
-
-                } else if ($this->getLogicalId() == 'playAr') {
-                    
+                    $play = $eqLogic->getConfiguration('play');
+                    if ($play != '') {
+                        $options['title'] = $eqLogic->getConfiguration('url');
+                        $options['message'] = $eqLogic->getConfiguration('url');
+                        $cmd = cmd::byId(str_replace("#", "", $play));
+                        $cmd->execCmd($options);
+                    }
+                } else if ($this->getLogicalId() == 'playFr') {
+                    $play = $eqLogic->getConfiguration('play');
+                    if ($play != '') {
+                        $options['title'] = $eqLogic->getConfiguration('urlfr');
+                        $options['message'] = $eqLogic->getConfiguration('urlfr');
+                        $cmd = cmd::byId(str_replace("#", "", $play));
+                        $cmd->execCmd($options);
+                    }
                 } else if ($this->getLogicalId() == 'randomAyat') {
                     $eqLogic->callAyah(rand(1,6236));
                 } else {
