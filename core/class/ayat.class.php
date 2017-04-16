@@ -97,7 +97,7 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
         $this->dwldAyat(implode(',', $audio),'arab');
-        $this->dwldAyat(implode(',', $audio),'fr');
+        $this->dwldAyat(implode(',', $audiotranslation),'fr');
     }
 
     public function callSourah($param) {
@@ -130,7 +130,7 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('numberInSurah', 0);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['revelationType']);
         $this->dwldAyat(implode(',', $audio),'arab');
-        $this->dwldAyat(implode(',', $audio),'fr');
+        $this->dwldAyat(implode(',', $audiotranslation),'fr');
     }
 
     public function dwldAyat($list,$lang) {
