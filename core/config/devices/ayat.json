@@ -145,6 +145,24 @@
                 "message_placeholder" : "Ayat"
             },
             "logicalId": "retrieve"
+        },
+        {
+            "name": "Lire la version originale",
+            "type": "action",
+            "subtype": "other",
+            "display": {
+				"icon": "<i class=\"fa fa-play\"><\/i>"
+            },
+            "logicalId": "retrieve"
+        },
+        {
+            "name": "Lire la traduction",
+            "type": "action",
+            "subtype": "other",
+            "display": {
+				"icon": "<i class=\"fa fa-step-forward\"><\/i>"
+            },
+            "logicalId": "retrieve"
         }
     ]
 }

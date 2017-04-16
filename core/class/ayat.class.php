@@ -26,8 +26,10 @@ class ayat extends eqLogic {
     }
 
     public function preSave() {
-        $url = network::getNetworkAccess('external') . '/plugins/ayat/data/' . $this->getId() . '.mp3';
+        $url = network::getNetworkAccess('external') . '/plugins/ayat/data/' . $this->getId() . '_arab.mp3';
         $this->setConfiguration('url',$url);
+        $url = network::getNetworkAccess('external') . '/plugins/ayat/data/' . $this->getId() . '_fr.mp3';
+        $this->setConfiguration('urlfr',$url);
     }
 
     public function loadCmdFromConf($_update = false) {
@@ -49,7 +51,7 @@ class ayat extends eqLogic {
 	}
 
     public function callAyah($param) {
-        $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
+        $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.' . $this->getConfiguration('recite') . ',fr.leclerc,fr.hamidullah';
         $body = json_decode(file_get_contents($url), true);
         $this->checkAndUpdateCmd('arabic', $body['data'][0]['text']);
         $this->checkAndUpdateCmd('translation', $body['data'][2]['text']);
@@ -77,7 +79,7 @@ class ayat extends eqLogic {
             } else {
                 $param = $sourate . ':' . $i;
             }
-            $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
+            $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.' . $this->getConfiguration('recite') . ',fr.leclerc,fr.hamidullah';
             $body = json_decode(file_get_contents($url), true);
             $arabic .= $body['data'][0]['text'];
             $translation .= $body['data'][2]['text'];
@@ -101,7 +103,7 @@ class ayat extends eqLogic {
     }
 
     public function callSourah($param) {
-        $url = 'http://api.alquran.cloud/surah/' . $param . '/editions/ar.husarymujawwad,fr.leclerc,fr.hamidullah';
+        $url = 'http://api.alquran.cloud/surah/' . $param . '/editions/ar.' . $this->getConfiguration('recite') . ',fr.leclerc,fr.hamidullah';
         $body = json_decode(file_get_contents($url), true);
         $arabic = $translation = $juz = '';
         $audio = $audiotranslation = [];
