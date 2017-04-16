@@ -115,7 +115,7 @@ $eqLogics = eqLogic::byType('ayat');
                         <div class="form-group">
                             <label class="col-sm-3 control-label">{{Récitateur}}</label>
                             <div class="col-sm-3">
-                                <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="week">
+                                <select class="form-control eqLogicAttr" data-l1key="configuration" data-l2key="recite">
                                     <option value="abdullahbasfar">{{Abdullah Basfar}}</option>
                                     <option value="abdurrahmaansudais">{{Abdurrahmaan As-Sudais}}</option>
                                     <option value="abdulsamad">{{Abdul Samad}}</option>
