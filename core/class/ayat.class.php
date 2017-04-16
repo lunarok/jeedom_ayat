@@ -63,8 +63,8 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('numberInSurah', $body['data'][1]['numberInSurah']);
         $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
-        $this->dwldAyat($body['data'][0]['audio'],'arab');
-        $this->dwldAyat($body['data'][1]['audio'],'fr');
+        $this->dwldAyat(implode(',', ($body['data'][0]['audio']),'arab');
+        $this->dwldAyat(implode(',', ($body['data'][1]['audio']),'fr');
     }
 
     public function callExtract($sourate,$param) {
@@ -96,8 +96,8 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('numberInSurah', $body['data'][1]['numberInSurah']);
         $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
-        $this->dwldAyat(json_encode($audio),'arab');
-        $this->dwldAyat(json_encode($audio),'fr');
+        $this->dwldAyat(implode(',', $audio),'arab');
+        $this->dwldAyat(implode(',', $audio),'fr');
     }
 
     public function callSourah($param) {
@@ -129,8 +129,8 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('number', 0);
         $this->checkAndUpdateCmd('numberInSurah', 0);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['revelationType']);
-        $this->dwldAyat(json_encode($audio),'arab');
-        $this->dwldAyat(json_encode($audio),'fr');
+        $this->dwldAyat(implode(',', $audio),'arab');
+        $this->dwldAyat(implode(',', $audio),'fr');
     }
 
     public function dwldAyat($list,$lang) {
@@ -141,8 +141,8 @@ class ayat extends eqLogic {
         $list = substr_replace('[','',substr_replace(']','',substr_replace('"','',substr_replace(',','|',substr_replace('\\','',$list)))));
         $data_path = realpath(dirname(__FILE__)) . '/../../data/' . $this->getId() . '_' . $lang . '.mp3';
         $resource_path = realpath(dirname(__FILE__) . '/../../resources');
-        log::add('ayat', 'debug', $resource_path . '/install.sh ' . $list . ' ' . $data_path );
-        passthru('/bin/bash ' . $resource_path . '/install.sh ' . $list . ' ' . $data_path);
+        log::add('ayat', 'debug', $resource_path . '/install.sh "' . $list . '" ' . $data_path );
+        passthru('/bin/bash ' . $resource_path . '/install.sh "' . $list . '" ' . $data_path);
 	}
 
 }
