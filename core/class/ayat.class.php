@@ -184,7 +184,12 @@ class ayatCmd extends cmd {
                 }
                 break;
                 case 'other':
-                if ($this->getLogicalId() == 'randomAyat') {
+                if ($this->getLogicalId() == 'playAr') {
+                    $eqLogic->getConfiguration('play');
+
+                } else if ($this->getLogicalId() == 'playAr') {
+                    
+                } else if ($this->getLogicalId() == 'randomAyat') {
                     $eqLogic->callAyah(rand(1,6236));
                 } else {
                     $eqLogic->callSourah(rand(1,114));

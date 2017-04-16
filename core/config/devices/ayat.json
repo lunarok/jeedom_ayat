@@ -153,7 +153,7 @@
             "display": {
 				"icon": "<i class=\"fa fa-play\"><\/i>"
             },
-            "logicalId": "retrieve"
+            "logicalId": "playAr"
         },
         {
             "name": "Lire la traduction",
@@ -162,7 +162,7 @@
             "display": {
 				"icon": "<i class=\"fa fa-step-forward\"><\/i>"
             },
-            "logicalId": "retrieve"
+            "logicalId": "playFr"
         }
     ]
 }
