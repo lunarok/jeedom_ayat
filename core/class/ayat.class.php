@@ -140,8 +140,8 @@ class ayat extends eqLogic {
         log::add('ayat', 'debug', 'list : ' . $list);
         $data_path = realpath(dirname(__FILE__)) . '/../../data/' . $this->getId() . '_' . $lang . '.mp3';
         $resource_path = realpath(dirname(__FILE__) . '/../../resources');
-        log::add('ayat', 'debug', $resource_path . '/install.sh "' . $list . '" ' . $data_path );
-        passthru('/bin/bash ' . $resource_path . '/install.sh "' . $list . '" ' . $data_path);
+        log::add('ayat', 'debug', $resource_path . '/dwld.sh "' . $list . '" ' . $data_path );
+        passthru('/bin/bash ' . $resource_path . '/dwld.sh "' . $list . '" ' . $data_path);
 	}
 
 }
