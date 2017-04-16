@@ -63,8 +63,8 @@ class ayat extends eqLogic {
         $this->checkAndUpdateCmd('numberInSurah', $body['data'][1]['numberInSurah']);
         $this->checkAndUpdateCmd('juz', $body['data'][1]['juz']);
         $this->checkAndUpdateCmd('surah:revelationType', $body['data'][1]['surah']['revelationType']);
-        $this->dwldAyat(implode(',', ($body['data'][0]['audio']),'arab');
-        $this->dwldAyat(implode(',', ($body['data'][1]['audio']),'fr');
+        $this->dwldAyat(implode(',', $body['data'][0]['audio']),'arab');
+        $this->dwldAyat(implode(',', $body['data'][1]['audio']),'fr');
     }
 
     public function callExtract($sourate,$param) {
