@@ -1,3 +1,13 @@
 ==== Configuration du plugin
 
-Le plugin ne comporte pas de configuration générale ni par équipement.
+Le plugin ne comporte pas de configuration générale.
+
+Par équipement vous devez choisir le récitateur pour la version arabe
+
+La version francophone est unique, il n'y a donc pas de choix
+
+La page de configuration donne aussi pour indication 2 URL Jeedom auquelles sont disponibles les MP3 francais et arabe des sélections en cours
+
+Cette URL permet de lancer la lecture dans Squeezebox Player par exemple
+
+Une commande de lecture peut être indiqué aussi sur la page, elle servira aux commandes lecture de l'équipement (prevu pour Squeezebox)

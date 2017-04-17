@@ -1,3 +1,3 @@
 ==== Ayat
 
-Dieses Plugin ermöglicht die Suche einer Sure, ein Vers oder zum Beispiel ein Dschuz. Mehrere Sprachversionen sind verfügbar, ebenso wie Audio.
+Ce plugin permet de chercher une sourate, un verset ou un juzz par exemple. Plusieurs versions récitées sont disponibles ainsi que de l'audio francais.
