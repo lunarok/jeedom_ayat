@@ -44,10 +44,28 @@ class ayat extends eqLogic {
 		if (!is_array($device) || !isset($device['commands'])) {
 			return true;
 		}
-		if (isset($device['name']) && !$_update) {
-			$this->setName('[' . $this->getLogicalId() . ']' . $device['name']);
+		/*$this->import($device);*/
+        if (isset($device['configuration'])) {
+			foreach ($device['configuration'] as $key => $value) {
+				$this->setConfiguration($key, $value);
+			}
 		}
-		$this->import($device);
+        foreach ($device['commands'] as $command) {
+            $cmd = null;
+            foreach ($this->getCmd() as $liste_cmd) {
+                if ((isset($command['logicalId']) && $liste_cmd->getLogicalId() == $command['logicalId'])
+                    || (isset($command['name']) && $liste_cmd->getName() == $command['name'])) {
+                    $cmd = $liste_cmd;
+                    break;
+                }
+            }
+            if ($cmd == null || !is_object($cmd)) {
+                $cmd = new ayatCmd();
+                $cmd->setEqLogic_id($this->getId());
+                utils::a2o($cmd, $command);
+                $cmd->save();
+            }
+        }
 	}
 
     public function callAyah($param) {
