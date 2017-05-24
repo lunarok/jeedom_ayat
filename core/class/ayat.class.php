@@ -99,8 +99,8 @@ class ayat extends eqLogic {
             }
             $url = 'http://api.alquran.cloud/ayah/' . $param . '/editions/ar.' . $this->getConfiguration('recite') . ',fr.leclerc,fr.hamidullah';
             $body = json_decode(file_get_contents($url), true);
-            $arabic .= $body['data'][0]['text'];
-            $translation .= $body['data'][2]['text'];
+            $arabic .= $body['data'][0]['number'] . ' - ' . $body['data'][0]['text'];
+            $translation .= $body['data'][2]['number'] . ' - ' . $body['data'][2]['text'];
             $audio[] = $body['data'][0]['audio'];
             $audiotranslation[] = $body['data'][1]['audio'];
         }
