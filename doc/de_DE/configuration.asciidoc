@@ -1,10 +1,10 @@
 ==== Plugin Konfiguration
 
-Le plugin ne comporte pas de configuration générale.
+Das Plugin enthält keine allgemeine Konfiguration.
 
-Par équipement vous devez choisir le récitateur pour la version arabe
+Bei den Geräten müssen Sie den Rezitator für die arabische Version auswählen
 
-La version francophone est unique, il n'y a donc pas de choix
+Die französische Version ist einzigartig, es gibt daher keine andere Wahl
 
 La page de configuration donne aussi pour indication 2 URL Jeedom auquelles sont disponibles les MP3 francais et arabe des sélections en cours
 
