@@ -1,10 +1,13 @@
 {
 	"id" : "ayat",
 	"name" : "Ayat",
+	"description" : "Permet d'obtenir des versets et sourates en version texte et audio depuis une API. Vous pouvez alors avoir le texte de lecture sur le widget avec la traduction et lancer l'audio sur votre lecteur habituel. Il est possible de récupérer des sourates entièrs ou bien juste un extrait de versets.",
 	"licence" : "AGPL",
 	"author" : "lunarok",
-	"require" : "2.4",
+	"require" : "3.2",
 	"category" : "organization",
+	"language" : ["fr_FR","en_US"],
+	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"],
   "changelog" : "https://lunarok.github.io/jeedom_docs/plugins/ayat/changelog.html",
   "documentation" : "https://lunarok.github.io/jeedom_docs/plugins/ayat/"
 }
