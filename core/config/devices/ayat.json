@@ -122,7 +122,7 @@
             "type": "action",
             "subtype": "other",
             "display": {
-				"icon": "<i class=\"fa fa-random\"><\/i>"
+				"icon": "<i class=\"fas fa-random\"><\/i>"
             },
             "logicalId": "randomAyat"
         },
@@ -131,7 +131,7 @@
             "type": "action",
             "subtype": "other",
             "display": {
-				"icon": "<i class=\"fa fa-random\"><\/i>"
+				"icon": "<i class=\"fas fa-random\"><\/i>"
             },
             "logicalId": "randomSourate"
         },
@@ -151,7 +151,7 @@
             "type": "action",
             "subtype": "other",
             "display": {
-				"icon": "<i class=\"fa fa-play\"><\/i>"
+				"icon": "<i class=\"fas fa-play\"><\/i>"
             },
             "logicalId": "playAr"
         },
@@ -160,7 +160,7 @@
             "type": "action",
             "subtype": "other",
             "display": {
-				"icon": "<i class=\"fa fa-step-forward\"><\/i>"
+				"icon": "<i class=\"fas fa-step-forward\"><\/i>"
             },
             "logicalId": "playFr"
         }
