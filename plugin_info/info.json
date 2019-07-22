@@ -4,7 +4,7 @@
 	"description" : "Permet d'obtenir des versets et sourates en version texte et audio depuis une API. Vous pouvez alors avoir le texte de lecture sur le widget avec la traduction et lancer l'audio sur votre lecteur habituel. Il est possible de récupérer des sourates entièrs ou bien juste un extrait de versets.",
 	"licence" : "AGPL",
 	"author" : "lunarok",
-	"require" : "3.2",
+	"require" : "3.3.24",
 	"category" : "organization",
 	"language" : ["fr_FR","en_US"],
 	"compatibility" : ["miniplus","smart","rpi","docker","diy","mobile"],
