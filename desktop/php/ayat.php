@@ -37,6 +37,7 @@ $eqLogics = eqLogic::byType('ayat');
           <br/>
         <span style="color:#00979c">{{Configuration}}></span>
       </div>
+      </div>
 
     <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
 
